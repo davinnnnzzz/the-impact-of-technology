@@ -1,71 +1,164 @@
+/* Default is LIGHT MODE */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #FBF3E9;
-    color: #4A3728;
+    background-color: #FBF3E9; /* Latar belakang terang */
+    color: #4A3728; /* Teks gelap */
     overflow-x: hidden;
 }
+/* .dark class now activates DARK MODE */
 .dark body {
-    background-color: #2a211c; /* Warna dark mode yang lebih hangat */
-    color: #EADBC8;
+    background-color: #2a211c; /* Latar belakang gelap */
+    color: #EADBC8; /* Teks terang */
 }
 h1, h2, h3, .font-anton {
     font-family: 'Anton', sans-serif;
     text-transform: uppercase;
 }
+/* Marquee styles for LIGHT mode */
 .marquee-container {
     overflow: hidden;
     white-space: nowrap;
+    background: linear-gradient(
+        125deg, 
+        #FBF3E9, 
+        #EADBC8, 
+        #D4C5B4, 
+        #EADBC8, 
+        #FBF3E9
+    );
+    background-size: 400% 400%;
+    animation: thematic-gradient 15s ease infinite;
+}
+/* Marquee styles for DARK mode */
+.dark .marquee-container {
+     background: linear-gradient(
+        125deg, 
+        #3C2A21, 
+        #8a786a,
+        #FBF3E9,
+        #4A3728, 
+        #3C2A21
+    );
+    background-size: 400% 400%;
+    animation: thematic-gradient 10s ease infinite;
 }
 .marquee {
     display: inline-block;
-    animation: marquee 30s linear infinite;
 }
-.marquee-image {
-    display: inline-block;
-    width: auto;
-    height: 10rem; 
-    margin: 0 1rem;
-    vertical-align: middle;
-    background-image: url('https://placehold.co/400x200/89CFF0/FFFFFF?text=Clouds');
-    background-size: cover;
-    background-position: center;
+@keyframes thematic-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
-@keyframes marquee {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-50%); }
+/* Marquee text color */
+.marquee-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    color: #4A3728; /* Teks gelap untuk tema terang */
 }
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+.dark .marquee-text {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    color: #FBF3E9; /* Teks terang untuk tema gelap */
 }
 
-/* Custom styles for dark mode toggle to match screenshot */
+/* Card Shadow Effect */
+.card-shadow {
+    box-shadow: 0 4px 10px -2px rgb(0 0 0 / 0.1);
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+.card-shadow:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 20px -5px rgb(0 0 0 / 0.15);
+}
+.dark .card-shadow {
+     box-shadow: 0 4px 10px -2px rgb(0 0 0 / 0.3);
+}
+.dark .card-shadow:hover {
+    box-shadow: 0 12px 20px -5px rgb(0 0 0 / 0.4);
+}
+
+/* Gallery Item Hover Effect */
+.gallery-item {
+    overflow: hidden;
+    border-radius: 0.5rem; /* lg */
+}
+.gallery-item img {
+    transition: transform 0.4s ease;
+}
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Custom styles for dark mode toggle with added shadow for visibility */
+.toggle-wrapper {
+    box-shadow: 0 2px 8px -1px rgba(0,0,0,0.15);
+    border-radius: 9999px;
+}
+/* State for LIGHT mode (default, UNCHECKED) */
 #dark-mode-toggle + div {
-     background-color: #E5E7EB; /* gray-200 */
+     background-color: #E5E7EB; /* Abu-abu terang */
      border-radius: 9999px;
-     padding: 0.25rem; /* 4px */
-     width: 8rem; /* 128px */
-     height: 4.5rem; /* 72px */
+     padding: 0.25rem;
+     width: 8rem;
+     height: 4.5rem;
      display: flex;
      align-items: center;
      transition: background-color 0.5s ease;
 }
+/* State for DARK mode (toggled, CHECKED) */
 #dark-mode-toggle:checked + div {
-     background-color: #6B7280; /* gray-500, lighter */
+     background-color: #3C2A21; /* Cokelat tua */
 }
+/* Circle style for LIGHT state */
 #dark-mode-toggle + div > div {
-    background-color: #3B82F6; /* blue-500 */
-    width: 4rem; /* 64px */
-    height: 4rem; /* 64px */
+    background-color: #3B82F6; /* Biru */
+    width: 4rem;
+    height: 4rem;
     border-radius: 9999px;
     transition: transform 0.5s ease, background-color 0.5s ease;
+    transform: translateX(0rem); /* Start on the left */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+/* Circle style for DARK state */
 #dark-mode-toggle:checked + div > div {
-    transform: translateX(3.5rem); /* 56px */
-    background-color: #E2E8F0; /* gray-200 */
+    transform: translateX(3.5rem); /* Move to the right */
+    background-color: #EADBC8; /* Krem terang */
+}
+
+/* Icon styles */
+#theme-icon {
+    width: 2rem; /* 32px */
+    height: 2rem; /* 32px */
+    color: white; /* Default color for light mode */
+    transition: color 0.5s ease;
+}
+#dark-mode-toggle:checked + div #theme-icon {
+    color: #3C2A21; /* Icon color for dark mode */
+}
+
+/* Elegant Nav Link Style */
+.nav-link {
+    position: relative;
+    padding: 0.5rem 0.25rem;
+    transition: color 0.3s ease;
+}
+.nav-link:hover {
+    color: #FCD34D; /* amber-300 */
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #FCD34D; /* amber-300 */
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+.nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
 }
